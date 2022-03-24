@@ -1,6 +1,6 @@
 #include <math.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 int ft_close(FILE *file) {
 	write(1, "Error: Operation file corrupted\n", 32);
 	fclose(file);
@@ -8,14 +8,14 @@ int ft_close(FILE *file) {
 }
 int main(int argc, char **argv) {
 	FILE *file;
-	int i = -1, j, height, width, arg;
+	char c, symb;
 	float x, y, radius, res;
-	char back, c, symb;
+	int i = -1, j, height, width, arg;
 	if(argc != 2)
 		return(write(1, "Error: argument\n", 16) && 1);
 	if(!(file = fopen(argv[1], "r")))
 		return(write(1, "Error: Operation file corrupted\n", 32) && 1);
-	if((arg = fscanf(file, "%d %d %c\n", &width, &height, &back)) != 3)
+	if(fscanf(file, "%d %d %c\n", &width, &height, &symb) != 3)
 		return(ft_close(file));
 	if(width <= 0 || width > 300 || height <= 0 || height > 300)
 		return(ft_close(file));
@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 	while(++i < height) {
 		j = -1;
 		while(++j < width)
-			arr[i][j] = back;
+			arr[i][j] = symb;
 	}
 	while((arg = fscanf(file, "%c %f %f %f %c\n", &c, &x, &y, &radius, &symb)) == 5) {
 		if((c != 'c' && c != 'C') || radius <= 0)

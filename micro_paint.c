@@ -1,6 +1,5 @@
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 int ft_close(FILE *file) {
     write(1, "Error: Operation file corrupted\n", 32);
     fclose (file);
@@ -13,14 +12,14 @@ int ft_check(int i, int j, float x, float y, float w, float h) {
 }
 int main (int argc, char **argv) {
     FILE *file;
+    char c, symb;
     float x, y, w, h;
-    char c, back, symb;
     int i = -1, j, width, height, arg;
     if (argc != 2)
         return (write(1, "Error: argument\n", 16) && 1);
     if (!(file = fopen(argv[1], "r")))
         return(write(1, "Error: Operation file corrupted\n", 32) && 1);
-    if ((fscanf(file, "%d %d %c\n", &width, &height, &back)) != 3)
+    if (fscanf(file, "%d %d %c\n", &width, &height, &symb) != 3)
         return (ft_close(file));
     if (width <= 0 || width > 300 || height <= 0 || height > 300)
         return (ft_close(file));
@@ -28,7 +27,7 @@ int main (int argc, char **argv) {
     while (++i < height) {
         j = -1;
         while (++j < width)
-            arr[i][j] = back;
+            arr[i][j] = symb;
     }
     while ((arg = fscanf(file, "%c %f %f %f %f %c\n", &c, &x, &y, &w, &h, &symb)) == 6) {
         if ((c != 'r' && c != 'R') || (w <= 0 || h <= 0))
